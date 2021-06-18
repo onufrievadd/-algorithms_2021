@@ -20,3 +20,38 @@
 
 Задание творческое. Здесь нет жестких требований к выполнению.
 """
+list_of_companies = {"Компания1": 1000,
+                     "Компания2": 2000,
+                     "Компания3": 3000,
+                     "Компания4": 4000,
+                     "Компания5": 5000,
+                     "Компания6": 6000,
+                     "Компания7": 7000,
+                     "Компания8": 8000
+                     }
+
+
+result = sorted(list_of_companies.items(), key=lambda x: x[1], reverse=True)  # O(n log n)
+for i in result[0:3]:   # O(n)
+    print(i)
+
+
+def best_comp_v1(dictionary):                   # O(n^3)
+    result = []                                 # O(1)
+    company = dictionary                        # O(1)
+    while len(result) != 3:                     # O(n)
+        for k in company:                       # O(n)
+            t = True                            # O(1)
+            for a in company:                   # O(n)
+                if company[k] < company[a]:     # O(len(company(k)))
+                    t = False                   # O(1)
+            if t == True:                       # O(n)
+                result.append(k)                # O(1)
+                company.pop(k)                  # O(1)
+                break                           # O(1)
+    return result                               # O(1)
+
+
+print(best_comp_v1(list_of_companies))
+
+
