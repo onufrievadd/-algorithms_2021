@@ -25,3 +25,37 @@
 
 Задание творческое. Здесь нет жестких требований к выполнению.
 """
+
+
+
+# 2. -  O(N)
+users_data = {
+    'ojfh': ['*klk', 'Maxim', 'Fiff', '02.06.1996', '111-111-1111', 0],
+    'fdh': ['qwer34', 'Masha', 'Nas', '12.05.1995', '222-222-2222', 0],
+    'jkhk': ['454545', 'Anna', 'Van', '11.06.1990', '333-333-3333', 0]
+}
+
+
+def check_login(login):  # O(1)
+    if login in users_data:  # O(N)
+        check_pass()  # O(1)
+    else:  # O(1)
+        print('Логин не верный. Пройдите регистрацию.')  # O(1)
+
+
+def check_pass():  # O(1)
+    i = 0  # O(1)
+    while i < 3:  # O(1)
+        password = input('Введите пароль: ')  # O(1)
+        if password == users_data[user_login][0]:  # O(N)
+            users_data[user_login].pop(-1)  # O(1)
+            users_data[user_login].append(1)  # O(1)
+            print("Аккаунт активирован. Здравствуйте!")  # O(1)
+            break  # O(1)
+        else:  # O(1)
+            i += 1  # O(1)
+            print(f'не верный пароль. осталось {(3 - i)} попыток!')  # O(1)
+
+
+user_login = input('Введите Логин: ')  # O(1)
+check_login(user_login) # O(1)
