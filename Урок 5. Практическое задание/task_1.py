@@ -23,3 +23,42 @@
 
 Предприятия, с прибылью ниже среднего значения: Фирма_2
 """
+
+
+from collections import namedtuple
+
+firms = namedtuple('name', 'name, total')
+
+firms_list = []
+
+while not 0:
+    try:
+        firms_num = int(input('Введите количество фирм для расчета прибыли: '))
+        assert firms_num > 0
+        break
+    except AssertionError:
+        print('не возможно создать отчет по нулю фирм, введите минимум 1 фирму')
+    except ValueError:
+        print('Вы вместо числа ввели строку. Исправьтесь')
+
+while True:
+    try:
+        for i in range(firms_num):
+                name = input(f'\nВведите название {i + 1} фирмы: ')
+                profit_1 = int(input('Введите прибыль за 1-й квартал: '))
+                profit_2 = int(input('Введите прибыль за 2-й квартал: '))
+                profit_3 = int(input('Введите прибыль за 3-й квартал: '))
+                profit_4 = int(input('Введите прибыль за 4-й квартал: '))
+                profit = firms(name, total=int(profit_1) + int(profit_2) + int(profit_3) + int(profit_4))
+                firms_list.append(profit)
+        break
+    except Exception as error:
+        print('Ошибка!Начинаем все заново, проверяйте данные при вводе!')
+        firms_list.clear()
+
+profit_avg = sum(el.total for el in firms_list) / len(firms_list)
+print('\nСредняя годовая прибыль всех предприятий:', profit_avg)
+print('Предприятия, с прибылью выше среднего значения:',
+      ', '.join(el.name for el in firms_list if el.total > profit_avg))
+print('Предприятия, с прибылью ниже среднего значения:',
+      ', '.join(el.name for el in firms_list if el.total < profit_avg))
