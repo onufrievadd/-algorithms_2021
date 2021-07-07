@@ -25,7 +25,7 @@
 """
 
 
-from collections import namedtuple
+from collections import namedtuple,defaultdict
 
 firms = namedtuple('name', 'name, total')
 
@@ -33,7 +33,7 @@ firms_list = []
 
 while not 0:
     try:
-        firms_num = int(input('Введите количество фирм для расчета прибыли: '))
+        firms_num = int(input('Введите количество фирм для рассчета прибыли: '))
         assert firms_num > 0
         break
     except AssertionError:
@@ -57,8 +57,41 @@ while True:
         firms_list.clear()
 
 profit_avg = sum(el.total for el in firms_list) / len(firms_list)
-print('\nСредняя годовая прибыль всех предприятий:', profit_avg)
-print('Предприятия, с прибылью выше среднего значения:',
+print('\nСредняя годовая прибыль всех фирм:', profit_avg)
+print('Фирма, с прибылью выше среднего значения:',
       ', '.join(el.name for el in firms_list if el.total > profit_avg))
-print('Предприятия, с прибылью ниже среднего значения:',
+print('Фирма, с прибылью ниже среднего значения:',
       ', '.join(el.name for el in firms_list if el.total < profit_avg))
+
+# Вариант 2
+
+firms_dict = defaultdict(int)
+
+while not 0:
+    try:
+        firms_num = int(input('Введите количество фирм для рассчета прибыли: '))
+        assert firms_num > 0
+        break
+    except AssertionError:
+        print('не возможно создать отчет по нулю фирм, введите минимум 1 фирму')
+    except ValueError:
+        print('Вы вместо числа ввели строку. Исправьтесь')
+while True:
+    try:
+        for i in range(firms_num):
+            name = input(f'\nВведите название {i + 1} фирмы: ')
+            profit = input('Через пробел введите прибыль данной фирмы '
+                           'за каждый квартал (всего 4 квартала): ')
+            firms_dict[name] = sum(map(int, profit.split()))
+        break
+    except Exception as error:
+        print('Ошибка!Начинаем все заново, проверяйте данные при вводе!')
+        firms_list.clear()
+
+profit_avg = sum(firms_dict.values()) / firms_num
+
+print('\nСредняя годовая прибыль всех фирм:', profit_avg)
+print('Фирма, с прибылью выше среднего значения:',
+      ', '.join(k for k, v in firms_dict.items() if v > profit_avg))
+print('Фирма, с прибылью ниже среднего значения:',
+      ', '.join(k for k, v in firms_dict.items() if v < profit_avg))
